@@ -103,13 +103,41 @@ class _TierListPageState extends State<TierListPage> {
     'seraphine',
     'sett',
     'shen',
-    'Tristana',
-    'Lucian',
-    'Zeri',
-    'Sivir',
-    'Draven',
-    'Ashe',
-    'Miss-Fortune'
+    'shyvana',
+    'singed',
+    'sion',
+    'sivir',
+    'sona',
+    'soraka',
+    'swain',
+    'syndra',
+    'talon',
+    'teemo',
+    'thresh',
+    'tristana',
+    'tryndamere',
+    'twisted-fate',
+    'twitch',
+    'urgot',
+    'varus',
+    'vayne',
+    'veigar',
+    'vex',
+    'vi',
+    'vladimir',
+    'volibear',
+    'warwick',
+    'wukong',
+    'xayah',
+    'xin-zhao',
+    'yasuo',
+    'yone',
+    'yuumi',
+    'zed',
+    'zeri',
+    'ziggs',
+    'zoe',
+    'zyra'
   ];
 
   Map<String, List<String>> tierList = {
@@ -123,7 +151,7 @@ class _TierListPageState extends State<TierListPage> {
   void resetTierList() {
     setState(() {
       tierList.forEach((key, value) => value.clear());
-      championPool = [
+      List<String> championPool = [
         'aatrox',
         'ahri',
         'akali',
@@ -201,13 +229,41 @@ class _TierListPageState extends State<TierListPage> {
         'seraphine',
         'sett',
         'shen',
-        'Tristana',
-        'Lucian',
-        'Zeri',
-        'Sivir',
-        'Draven',
-        'Ashe',
-        'Miss-Fortune'
+        'shyvana',
+        'singed',
+        'sion',
+        'sivir',
+        'sona',
+        'soraka',
+        'swain',
+        'syndra',
+        'talon',
+        'teemo',
+        'thresh',
+        'tristana',
+        'tryndamere',
+        'twisted-fate',
+        'twitch',
+        'urgot',
+        'varus',
+        'vayne',
+        'veigar',
+        'vex',
+        'vi',
+        'vladimir',
+        'volibear',
+        'warwick',
+        'wukong',
+        'xayah',
+        'xin-zhao',
+        'yasuo',
+        'yone',
+        'yuumi',
+        'zed',
+        'zeri',
+        'ziggs',
+        'zoe',
+        'zyra'
       ];
     });
   }
@@ -334,7 +390,7 @@ class _TierListPageState extends State<TierListPage> {
         _moveToPool(championName);
       },
       child: Image.asset(
-        'assets/${championName.toLowerCase()}.webp',
+        'champs/${championName.toLowerCase()}.webp',
         errorBuilder: (context, error, stackTrace) {
           return Icon(Icons.error);
         },

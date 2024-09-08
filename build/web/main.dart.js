@@ -61764,7 +61764,7 @@ A.CU.prototype={
 O(a){return new A.tr(new A.vC(null),null)}}
 A.vC.prototype={
 ai(){var s=t.s
-return new A.yb(new A.bw(null,t.C),A.b(["aatrox","ahri","akali","akshan","alistar","amumu","annie","ashe","aurelion-sol","blitzcrank","brand","braum","Caitlyn","camille","Corki","darius","diana","dr-mundo","draven","ekko","evelynn","Ezreal","fiddlesticks","fiora","fizz","galio","garen","gragas","graves","gwen","hecarim","irelia","janna","jarvan-iv","jax","jayce","jhin","jinx","kaisa","karma","kassadin","katarina","kayle","kayn","kennen","khazix","kindred","lee-sin","leona","lillia","lucian","lulu","lux","malphite","master-yi","miss-fortune","morgana","nami","nasus","nautilus","nilah","nunu-and-willump","olaf","orianna","ornn","pantheon","pyke","rakan","rammus","renekton","rengar","riven","samira","senna","seraphine","sett","shen","Tristana","Lucian","Zeri","Sivir","Draven","Ashe","Miss-Fortune"],s),A.aR(["S+",A.b([],s),"S",A.b([],s),"A",A.b([],s),"B",A.b([],s),"C",A.b([],s)],t.N,t.yp))}}
+return new A.yb(new A.bw(null,t.C),A.b(["aatrox","ahri","akali","akshan","alistar","amumu","annie","ashe","aurelion-sol","blitzcrank","brand","braum","Caitlyn","camille","Corki","darius","diana","dr-mundo","draven","ekko","evelynn","Ezreal","fiddlesticks","fiora","fizz","galio","garen","gragas","graves","gwen","hecarim","irelia","janna","jarvan-iv","jax","jayce","jhin","jinx","kaisa","karma","kassadin","katarina","kayle","kayn","kennen","khazix","kindred","lee-sin","leona","lillia","lucian","lulu","lux","malphite","master-yi","miss-fortune","morgana","nami","nasus","nautilus","nilah","nunu-and-willump","olaf","orianna","ornn","pantheon","pyke","rakan","rammus","renekton","rengar","riven","samira","senna","seraphine","sett","shen","shyvana","singed","sion","sivir","sona","soraka","swain","syndra","talon","teemo","thresh","tristana","tryndamere","twisted-fate","twitch","urgot","varus","vayne","veigar","vex","vi","vladimir","volibear","warwick","wukong","xayah","xin-zhao","yasuo","yone","yuumi","zed","zeri","ziggs","zoe","zyra"],s),A.aR(["S+",A.b([],s),"S",A.b([],s),"A",A.b([],s),"B",A.b([],s),"C",A.b([],s)],t.N,t.yp))}}
 A.yb.prototype={
 a4c(){this.ag(new A.a7F(this))},
 mG(){var s=0,r=A.U(t.H),q=1,p,o=this,n,m,l,k,j,i,h,g,f,e,d
@@ -61828,9 +61828,7 @@ return A.SF(s,new A.rU(A.aq_(s,s,new A.qm("assets/"+a.toLowerCase()+".webp",s,s)
 Zo(a){var s=null,r=new A.c6(B.CV,2,B.Q,-1),q=A.aa5(8)
 return new A.fg(B.yD,A.f4(s,A.PT(A.b([A.f4(s,A.abE(a,A.oL(s,s,B.j,s,s,s,s,s,s,s,s,24,s,s,B.bR,s,s,!0,s,s,s,s,s,s,s,s)),B.oR,s,s,s,B.jm,1/0),A.f4(s,new A.nq(new A.a7y(this,a),new A.a7z(this,a),new A.a7A(this,a),s,t.BN),s,s,70,s,s,s)],t.d),B.b_,B.aI),s,new A.fw(s,s,new A.d4(r,r,r,r),q,s,s,B.bi),s,s,s,s),s)}}
 A.a7F.prototype={
-$0(){var s=this.a
-s.f.T(0,new A.a7E())
-s.e=A.b(["aatrox","ahri","akali","akshan","alistar","amumu","annie","ashe","aurelion-sol","blitzcrank","brand","braum","Caitlyn","camille","Corki","darius","diana","dr-mundo","draven","ekko","evelynn","Ezreal","fiddlesticks","fiora","fizz","galio","garen","gragas","graves","gwen","hecarim","irelia","janna","jarvan-iv","jax","jayce","jhin","jinx","kaisa","karma","kassadin","katarina","kayle","kayn","kennen","khazix","kindred","lee-sin","leona","lillia","lucian","lulu","lux","malphite","master-yi","miss-fortune","morgana","nami","nasus","nautilus","nilah","nunu-and-willump","olaf","orianna","ornn","pantheon","pyke","rakan","rammus","renekton","rengar","riven","samira","senna","seraphine","sett","shen","Tristana","Lucian","Zeri","Sivir","Draven","Ashe","Miss-Fortune"],t.s)},
+$0(){this.a.f.T(0,new A.a7E())},
 $S:0}
 A.a7E.prototype={
 $2(a,b){return J.alB(b)},
