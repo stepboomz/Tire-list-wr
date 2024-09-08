@@ -332,7 +332,7 @@ class _TierListPageState extends State<TierListPage> {
         _moveToPool(championName);
       },
       child: Image.asset(
-        'assets/champs/${championName.toLowerCase()}.webp',
+        'champs/${championName.toLowerCase()}.webp',
         errorBuilder: (context, error, stackTrace) {
           return Icon(Icons.error);
         },
