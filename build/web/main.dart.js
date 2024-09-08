@@ -61824,7 +61824,7 @@ s=A.ca(r,p,s).w
 r=q.e.length
 return A.f4(p,A.PT(A.b([A.f4(p,new A.BS(new A.a0B(15,1,1),new A.a0x(new A.a7u(q),r,!0,!0,!0,p),p,B.aj,!1,p,p,B.vn,!1,p,r,B.aq,B.tO,p,B.ag,B.W,p),p,p,s.a.b*0.3,p,p,o.a.a*0.9)],t.d),B.b_,B.aI),B.j6,p,p,p,new A.bh(8,8,8,8),p)},
 qw(a){var s=null
-return A.SF(s,new A.rU(A.aq_(s,s,new A.qm("champs/"+a.toLowerCase()+".webp",s,s)),new A.a7C(),s),B.aq,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.a7D(this,a),s,s,s,s,s,s)},
+return A.SF(s,new A.rU(A.aq_(s,s,new A.qm("assets/"+a.toLowerCase()+".webp",s,s)),new A.a7C(),s),B.aq,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.a7D(this,a),s,s,s,s,s,s)},
 Zo(a){var s=null,r=new A.c6(B.CV,2,B.Q,-1),q=A.aa5(8)
 return new A.fg(B.yD,A.f4(s,A.PT(A.b([A.f4(s,A.abE(a,A.oL(s,s,B.j,s,s,s,s,s,s,s,s,24,s,s,B.bR,s,s,!0,s,s,s,s,s,s,s,s)),B.oR,s,s,s,B.jm,1/0),A.f4(s,new A.nq(new A.a7y(this,a),new A.a7z(this,a),new A.a7A(this,a),s,t.BN),s,s,70,s,s,s)],t.d),B.b_,B.aI),s,new A.fw(s,s,new A.d4(r,r,r,r),q,s,s,B.bi),s,s,s,s),s)}}
 A.a7F.prototype={
