@@ -4,6 +4,7 @@ import 'dart:html' as html;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
 
 void main() {
   runApp(MyApp());
@@ -140,132 +141,168 @@ class _TierListPageState extends State<TierListPage> {
     'zyra'
   ];
 
+  Map<String, String> championRoles = {
+    'aatrox': 'Top',
+    'ahri': 'Mid',
+    'akali': 'Mid',
+    'akshan': 'Mid',
+    'alistar': 'Support',
+    'amumu': 'Jungle',
+    'annie': 'Mid',
+    'ashe': 'ADC',
+    'aurelion-sol': 'Mid',
+    'blitzcrank': 'Support',
+    'brand': 'Support',
+    'braum': 'Support',
+    'Caitlyn': 'ADC',
+    'camille': 'Top',
+    'Corki': 'Mid',
+    'darius': 'Top',
+    'diana': 'Jungle',
+    'dr-mundo': 'Top',
+    'draven': 'ADC',
+    'ekko': 'Mid',
+    'evelynn': 'Jungle',
+    'Ezreal': 'ADC',
+    'fiddlesticks': 'Jungle',
+    'fiora': 'Top',
+    'fizz': 'Mid',
+    'galio': 'Mid',
+    'garen': 'Top',
+    'gragas': 'Top',
+    'graves': 'Jungle',
+    'gwen': 'Top',
+    'hecarim': 'Jungle',
+    'irelia': 'Top',
+    'janna': 'Support',
+    'jarvan-iv': 'Jungle',
+    'jax': 'Top',
+    'jayce': 'Top',
+    'jhin': 'ADC',
+    'jinx': 'ADC',
+    'kaisa': 'ADC',
+    'karma': 'Support',
+    'kassadin': 'Mid',
+    'katarina': 'Mid',
+    'kayle': 'Top',
+    'kayn': 'Jungle',
+    'kennen': 'Top',
+    'khazix': 'Jungle',
+    'kindred': 'Jungle',
+    'lee-sin': 'Jungle',
+    'leona': 'Support',
+    'lillia': 'Jungle',
+    'lucian': 'ADC',
+    'lulu': 'Support',
+    'lux': 'Support',
+    'malphite': 'Top',
+    'master-yi': 'Jungle',
+    'miss-fortune': 'ADC',
+    'morgana': 'Support',
+    'nami': 'Support',
+    'nasus': 'Top',
+    'nautilus': 'Support',
+    'nilah': 'ADC',
+    'nunu-and-willump': 'Jungle',
+    'olaf': 'Top',
+    'orianna': 'Mid',
+    'ornn': 'Top',
+    'pantheon': 'Top',
+    'pyke': 'Support',
+    'rakan': 'Support',
+    'rammus': 'Jungle',
+    'renekton': 'Top',
+    'rengar': 'Jungle',
+    'riven': 'Top',
+    'samira': 'ADC',
+    'senna': 'Support',
+    'seraphine': 'Support',
+    'sett': 'Top',
+    'shen': 'Top',
+    'shyvana': 'Jungle',
+    'singed': 'Top',
+    'sion': 'Top',
+    'sivir': 'ADC',
+    'sona': 'Support',
+    'soraka': 'Support',
+    'swain': 'Mid',
+    'syndra': 'Mid',
+    'talon': 'Mid',
+    'teemo': 'Top',
+    'thresh': 'Support',
+    'tristana': 'ADC',
+    'tryndamere': 'Top',
+    'twisted-fate': 'Mid',
+    'twitch': 'ADC',
+    'urgot': 'Top',
+    'varus': 'ADC',
+    'vayne': 'ADC',
+    'veigar': 'Mid',
+    'vex': 'Mid',
+    'vi': 'Jungle',
+    'vladimir': 'Mid',
+    'volibear': 'Top',
+    'warwick': 'Jungle',
+    'wukong': 'Top',
+    'xayah': 'ADC',
+    'xin-zhao': 'Jungle',
+    'yasuo': 'Mid',
+    'yone': 'Mid',
+    'yuumi': 'Support',
+    'zed': 'Mid',
+    'zeri': 'ADC',
+    'ziggs': 'Mid',
+    'zoe': 'Mid',
+    'zyra': 'Support'
+  };
+
   Map<String, List<String>> tierList = {
-    'S+': [],
     'S': [],
     'A': [],
     'B': [],
-    'C': []
+    'C': [],
+    'D': []
   };
 
-  void resetTierList() {
-    setState(() {
-      tierList.forEach((key, value) => value.clear());
-      List<String> championPool = [
-        'aatrox',
-        'ahri',
-        'akali',
-        'akshan',
-        'alistar',
-        'amumu',
-        'annie',
-        'ashe',
-        'aurelion-sol',
-        'blitzcrank',
-        'brand',
-        'braum',
-        'Caitlyn',
-        'camille',
-        'Corki',
-        'darius',
-        'diana',
-        'dr-mundo',
-        'draven',
-        'ekko',
-        'evelynn',
-        'Ezreal',
-        'fiddlesticks',
-        'fiora',
-        'fizz',
-        'galio',
-        'garen',
-        'gragas',
-        'graves',
-        'gwen',
-        'hecarim',
-        'irelia',
-        'janna',
-        'jarvan-iv',
-        'jax',
-        'jayce',
-        'jhin',
-        'jinx',
-        'kaisa',
-        'karma',
-        'kassadin',
-        'katarina',
-        'kayle',
-        'kayn',
-        'kennen',
-        'khazix',
-        'kindred',
-        'lee-sin',
-        'leona',
-        'lillia',
-        'lucian',
-        'lulu',
-        'lux',
-        'malphite',
-        'master-yi',
-        'miss-fortune',
-        'morgana',
-        'nami',
-        'nasus',
-        'nautilus',
-        'nilah',
-        'nunu-and-willump',
-        'olaf',
-        'orianna',
-        'ornn',
-        'pantheon',
-        'pyke',
-        'rakan',
-        'rammus',
-        'renekton',
-        'rengar',
-        'riven',
-        'samira',
-        'senna',
-        'seraphine',
-        'sett',
-        'shen',
-        'shyvana',
-        'singed',
-        'sion',
-        'sivir',
-        'sona',
-        'soraka',
-        'swain',
-        'syndra',
-        'talon',
-        'teemo',
-        'thresh',
-        'tristana',
-        'tryndamere',
-        'twisted-fate',
-        'twitch',
-        'urgot',
-        'varus',
-        'vayne',
-        'veigar',
-        'vex',
-        'vi',
-        'vladimir',
-        'volibear',
-        'warwick',
-        'wukong',
-        'xayah',
-        'xin-zhao',
-        'yasuo',
-        'yone',
-        'yuumi',
-        'zed',
-        'zeri',
-        'ziggs',
-        'zoe',
-        'zyra'
-      ];
+  void saveTierListState() {
+    // Convert the tierList and championPool to JSON
+    final tierListJson = jsonEncode({
+      'tierList':
+          tierList.map((key, value) => MapEntry(key, List<String>.from(value))),
+      'championPool': championPool,
     });
+
+    // Store in localStorage
+    html.window.localStorage['tierListState'] = tierListJson;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Tier list saved!')),
+    );
+  }
+
+  void loadTierListState() {
+    // Get the stored state from localStorage
+    final storedData = html.window.localStorage['tierListState'];
+
+    if (storedData != null) {
+      // Parse the stored JSON data and set the tierList and championPool
+      setState(() {
+        final parsedData = jsonDecode(storedData);
+
+        // Parse tierList properly
+        final loadedTierList =
+            Map<String, dynamic>.from(parsedData['tierList']);
+
+        // Ensure each tier's value is correctly converted to List<String>
+        tierList = loadedTierList
+            .map((key, value) => MapEntry(key, List<String>.from(value)));
+
+        // Convert championPool back to List<String>
+        championPool = List<String>.from(parsedData['championPool']);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Tier list loaded!')),
+      );
+    }
   }
 
   Future<void> _captureAndSaveTierListImage() async {
@@ -308,18 +345,23 @@ class _TierListPageState extends State<TierListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tier List'),
+        title: Text('Tier List 5.2C'),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: resetTierList, // Reset button
-            tooltip: 'Reset Tier List',
-          ),
-          IconButton(
-            icon: Icon(Icons.save_alt),
+            icon: Icon(Icons.image),
             onPressed:
                 _captureAndSaveTierListImage, // Save only tier list image
             tooltip: 'Save Tier List Image',
+          ),
+          IconButton(
+            icon: Icon(Icons.save_alt),
+            onPressed: saveTierListState, // Save tier list state
+            tooltip: 'Save Tier List',
+          ),
+          IconButton(
+            icon: Icon(Icons.folder_open),
+            onPressed: loadTierListState, // Load tier list state
+            tooltip: 'Load Tier List',
           ),
         ],
       ),
@@ -347,6 +389,38 @@ class _TierListPageState extends State<TierListPage> {
     );
   }
 
+  Widget championImageWithRole(String champion, String role) {
+    return Stack(
+      children: [
+        Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black, width: 1.0),
+          ),
+          child: championImage(
+              champion), // The function that displays the champion image
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: Container(
+            color: Colors.black.withOpacity(0.7),
+            padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+            child: Text(
+              champion,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget buildChampionPool() {
     return Container(
       color: Colors.grey[200],
@@ -366,15 +440,20 @@ class _TierListPageState extends State<TierListPage> {
               itemCount: championPool.length,
               itemBuilder: (context, index) {
                 String champion = championPool[index];
-                return Draggable<String>(
-                  data: champion,
-                  feedback: Material(
-                    child: Container(
-                      child: championImage(champion),
+                String role = championRoles[champion] ?? 'Unknown';
+
+                return SizedBox(
+                  width: 64, // Or any fixed size
+                  height: 64,
+                  child: Draggable<String>(
+                    data: champion,
+                    feedback: Material(
+                      child: championImageWithRole(champion, role),
                     ),
+                    childWhenDragging:
+                        Container(), // Ensure proper size here too
+                    child: championImageWithRole(champion, role),
                   ),
-                  childWhenDragging: Container(),
-                  child: championImage(champion),
                 );
               },
             ),
@@ -384,39 +463,82 @@ class _TierListPageState extends State<TierListPage> {
     );
   }
 
+  // Widget championImage(String championName) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       _moveToPool(championName);
+  //     },
+  //     child: Image.asset(
+  //       'champs/${championName.toLowerCase()}.webp',
+  //       // 'assets/${championName.toLowerCase()}.webp',
+  //       errorBuilder: (context, error, stackTrace) {
+  //         return Icon(Icons.error);
+  //       },
+  //     ),
+  //   );
+  // }
+
   Widget championImage(String championName) {
     return GestureDetector(
       onTap: () {
         _moveToPool(championName);
       },
-      child: Image.asset(
-        'champs/${championName.toLowerCase()}.webp',
-        errorBuilder: (context, error, stackTrace) {
-          return Icon(Icons.error);
-        },
+      child: Container(
+        width: 80, // กำหนดความกว้างของรูปภาพ
+        height: 85, // กำหนดความสูงของรูปภาพ
+        child: Image.asset(
+          'champs/${championName.toLowerCase()}.webp',
+          // 'assets/${championName.toLowerCase()}.webp',
+          errorBuilder: (context, error, stackTrace) {
+            return Icon(Icons.error);
+          },
+        ),
       ),
     );
   }
 
   Widget buildTierRow(String tier) {
+    Color tierColor;
+
+    switch (tier) {
+      case 'S':
+        tierColor = Colors.red[300]!; // สีแดงอ่อน
+        break;
+      case 'A':
+        tierColor = Colors.orange[300]!; // สีส้มอ่อน
+        break;
+      case 'B':
+        tierColor = Colors.yellow[300]!; // สีเหลืองอ่อน
+        break;
+      case 'C':
+        tierColor = Colors.green[300]!; // สีเขียวอ่อน
+        break;
+      case 'D':
+        tierColor = Colors.blue[300]!; // เพิ่มสีถ้า D
+        break;
+      default:
+        tierColor = Colors.grey[300]!; // สีเริ่มต้น (เผื่อกรณีผิดพลาด)
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(
+          // color: tierColor, // กำหนดสีพื้นหลังตาม tier
           border: Border.all(
-            color: Colors.grey, // Grey border for the entire tier row
+            color: Colors.grey, // กรอบสีเทา
             width: 2.0,
           ),
-          borderRadius: BorderRadius.circular(8.0), // Optional: Rounded corners
+          borderRadius: BorderRadius.circular(8.0), // มุมโค้งมน
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tier Header Inside the Border
+            // หัวข้อ tier
             Container(
-              color: Colors.red, // Red background for tier headers
+              color: tierColor, // พื้นหลังสีแดงสำหรับหัวข้อ
               padding: const EdgeInsets.all(8.0),
-              width: double.infinity, // Ensure header stretches full width
+              width: double.infinity,
               child: Text(
                 tier,
                 style: TextStyle(
@@ -426,7 +548,7 @@ class _TierListPageState extends State<TierListPage> {
                 ),
               ),
             ),
-            // Area to Place Champions
+            // ส่วนที่วางแชมเปี้ยน
             Container(
               height: 70,
               child: DragTarget<String>(
@@ -437,7 +559,7 @@ class _TierListPageState extends State<TierListPage> {
                   setState(() {
                     tierList[tier]!.add(champion);
                     championPool.remove(champion);
-                    // Remove from other tiers
+                    // ลบออกจาก tier อื่น ๆ
                     tierList.forEach((key, value) {
                       if (key != tier) {
                         value.remove(champion);
@@ -453,7 +575,7 @@ class _TierListPageState extends State<TierListPage> {
                             feedback: Material(
                               child: Container(
                                 padding: EdgeInsets.all(8.0),
-                                color: Colors.red, // Color when dragging
+                                color: Colors.red, // สีขณะลาก
                                 child: championImage(champion),
                               ),
                             ),
