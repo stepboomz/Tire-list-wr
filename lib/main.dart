@@ -24,7 +24,7 @@ class TierListPage extends StatefulWidget {
 }
 
 class _TierListPageState extends State<TierListPage> {
-  GlobalKey _repaintKey = GlobalKey();
+  GlobalKey _tierListRepaintKey = GlobalKey(); // GlobalKey for tier list
   List<String> championPool = [
     'aatrox',
     'ahri',
@@ -212,9 +212,9 @@ class _TierListPageState extends State<TierListPage> {
     });
   }
 
-  Future<void> _captureAndSaveImage() async {
+  Future<void> _captureAndSaveTierListImage() async {
     try {
-      RenderRepaintBoundary boundary = _repaintKey.currentContext!
+      RenderRepaintBoundary boundary = _tierListRepaintKey.currentContext!
           .findRenderObject() as RenderRepaintBoundary;
 
       var image = await boundary.toImage(pixelRatio: 3.0);
@@ -261,19 +261,21 @@ class _TierListPageState extends State<TierListPage> {
           ),
           IconButton(
             icon: Icon(Icons.save_alt),
-            onPressed: _captureAndSaveImage, // Button to save the image
+            onPressed:
+                _captureAndSaveTierListImage, // Save only tier list image
             tooltip: 'Save Tier List Image',
           ),
         ],
       ),
-      body: RepaintBoundary(
-        key: _repaintKey,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              buildChampionPool(),
-              Padding(
-                padding: const EdgeInsets.all(18.0),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            buildChampionPool(),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: RepaintBoundary(
+                key:
+                    _tierListRepaintKey, // Use this key for the tier list section
                 child: Container(
                   child: Column(
                     children: tierList.keys
@@ -282,8 +284,8 @@ class _TierListPageState extends State<TierListPage> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
