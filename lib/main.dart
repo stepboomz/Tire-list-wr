@@ -579,10 +579,18 @@ class _TierListPageState extends State<TierListPage> {
       },
       child: Container(
         width: 80, // กำหนดความกว้างของรูปภาพ
-        height: 85, // กำหนดความสูงของรูปภาพ
+        height: 80, // กำหนดความสูงของรูปภาพ (ให้เท่ากันเพื่อเป็นวงกลม)
+        decoration: BoxDecoration(
+          shape: BoxShape.circle, // ทำให้ Container เป็นวงกลม
+          border: Border.all(
+            color: Colors.transparent, // เพิ่มเส้นขอบ (ถ้าต้องการ)
+            width: 2.0,
+          ),
+        ),
+        clipBehavior: Clip.hardEdge, // ตัดรูปภาพส่วนเกินออกให้เป็นวงกลม
         child: Image.asset(
           'champs/${championName.toLowerCase()}.webp',
-          // 'assets/${championName.toLowerCase()}.webp',
+          fit: BoxFit.cover, // ทำให้ภาพเต็มพื้นที่ของ Container
           errorBuilder: (context, error, stackTrace) {
             return Icon(Icons.error);
           },
