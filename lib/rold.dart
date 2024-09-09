@@ -40,16 +40,16 @@ class RoleSelectionWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Image.asset(
-              'assets/$imageName',
-              width: 30,
-              height: 30,
-            ),
             // Image.asset(
-            //   'roles/$imageName',
+            //   'assets/$imageName',
             //   width: 30,
             //   height: 30,
             // ),
+            Image.asset(
+              'roles/$imageName',
+              width: 30,
+              height: 30,
+            ),
             SizedBox(height: 4),
             Text(
               role,

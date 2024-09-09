@@ -468,7 +468,11 @@ class _TierListPageState extends State<TierListPage> {
                 child: Container(
                   child: Column(
                     children: tierList.keys
-                        .map((tier) => buildTierRow(tier))
+                        .map((tier) => buildTierRow(
+                              tier,
+                              getTierDescription(
+                                  tier), // ส่งคำอธิบายไปพร้อมกับ tier
+                            ))
                         .toList(),
                   ),
                 ),
@@ -478,6 +482,23 @@ class _TierListPageState extends State<TierListPage> {
         ),
       ),
     );
+  }
+
+  String getTierDescription(String tier) {
+    switch (tier) {
+      case 'S':
+        return 'แชมเปี้ยนที่ดีที่สุดในแพทช์นี้ เลือกได้สำหรับทุกตำแหน่ง';
+      case 'A':
+        return 'แชมเปี้ยนที่แข็งแกร่ง สามารถเลือกเล่นได้บ่อย แต่ไม่โดดเด่นเท่า S-tier';
+      case 'B':
+        return 'แชมเปี้ยนระดับกลาง สามารถใช้งานได้ในสถานการณ์ที่เหมาะสม';
+      case 'C':
+        return 'แชมเปี้ยนที่มีความสามารถต่ำกว่าค่าเฉลี่ย ใช้ได้ในบางสถานการณ์';
+      case 'D':
+        return 'ไม่แนะนำสำหรับการเล่นในระดับแข่งขัน';
+      default:
+        return 'ไม่สามารถระบุระดับได้';
+    }
   }
 
   List<String> filterChampionPoolByRole() {
@@ -605,93 +626,141 @@ class _TierListPageState extends State<TierListPage> {
     );
   }
 
-  Widget buildTierRow(String tier) {
+  Widget buildTierRow(String tier, String description) {
     Color tierColor;
 
     switch (tier) {
       case 'S':
-        tierColor = Colors.red[300]!; // สีแดงอ่อน
+        tierColor = Colors.red[300]!;
         break;
       case 'A':
-        tierColor = Colors.orange[300]!; // สีส้มอ่อน
+        tierColor = Colors.orange[300]!;
         break;
       case 'B':
-        tierColor = Colors.yellow[300]!; // สีเหลืองอ่อน
+        tierColor = Colors.yellow[300]!;
         break;
       case 'C':
-        tierColor = Colors.green[300]!; // สีเขียวอ่อน
+        tierColor = Colors.green[300]!;
         break;
       case 'D':
-        tierColor = Colors.blue[300]!; // เพิ่มสีถ้า D
+        tierColor = Colors.blue[300]!;
         break;
       default:
-        tierColor = Colors.grey[300]!; // สีเริ่มต้น (เผื่อกรณีผิดพลาด)
+        tierColor = Colors.grey[300]!;
     }
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          // color: tierColor, // กำหนดสีพื้นหลังตาม tier
-          border: Border.all(
-            color: Colors.grey, // กรอบสีเทา
-            width: 2.0,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 3, // ส่วนนี้จะเป็นพื้นที่สำหรับแชมเปี้ยน
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 2.0,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // หัวข้อ tier
+                  Container(
+                    color: tierColor,
+                    padding: const EdgeInsets.all(8.0),
+                    width: double.infinity,
+                    child: Text(
+                      tier,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  // ส่วนที่วางแชมเปี้ยน
+                  Container(
+                    height: 100, // เพิ่มความสูงให้พื้นที่ใส่แชมเปี้ยนมากขึ้น
+                    child: DragTarget<String>(
+                      onWillAccept: (champion) {
+                        return !tierList[tier]!.contains(champion);
+                      },
+                      onAccept: (champion) {
+                        setState(() {
+                          tierList[tier]!.add(champion);
+                          championPool.remove(champion);
+                          tierList.forEach((key, value) {
+                            if (key != tier) {
+                              value.remove(champion);
+                            }
+                          });
+                        });
+                      },
+                      builder: (context, candidateData, rejectedData) =>
+                          ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: tierList[tier]!
+                            .map((champion) => Draggable<String>(
+                                  data: champion,
+                                  feedback: Material(
+                                    child: championImage(champion),
+                                  ),
+                                  childWhenDragging: Container(),
+                                  child: championImage(champion),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          borderRadius: BorderRadius.circular(8.0), // มุมโค้งมน
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // หัวข้อ tier
-            Container(
-              color: tierColor, // พื้นหลังสีแดงสำหรับหัวข้อ
+          SizedBox(width: 20), // เพิ่มระยะห่างระหว่างส่วนแชมเปี้ยนและคำอธิบาย
+          Expanded(
+            flex: 1, // ส่วนนี้จะเป็นพื้นที่สำหรับคำอธิบาย
+            child: Container(
               padding: const EdgeInsets.all(8.0),
-              width: double.infinity,
-              child: Text(
-                tier,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 10, // กำหนดความกว้างของวงกลม
+                        height: 10, // กำหนดความสูงของวงกลม
+                        decoration: BoxDecoration(
+                          color: tierColor, // สีของวงกลม
+                          shape: BoxShape.circle, // กำหนดให้เป็นวงกลม
+                        ),
+                      ),
+                      SizedBox(width: 8), // เพิ่มระยะห่างระหว่างวงกลมและข้อความ
+                      Text(
+                        '$tier Tier', // เพิ่มหัวข้อ tier ที่อธิบายอยู่
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    description, // คำอธิบายที่เกี่ยวข้องกับ tier นี้
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white, // สีข้อความ
+                    ),
+                  ),
+                ],
               ),
             ),
-            // ส่วนที่วางแชมเปี้ยน
-            Container(
-              height: 70,
-              child: DragTarget<String>(
-                onWillAccept: (champion) {
-                  return !tierList[tier]!.contains(champion);
-                },
-                onAccept: (champion) {
-                  setState(() {
-                    tierList[tier]!.add(champion);
-                    championPool.remove(champion);
-                    // ลบออกจาก tier อื่น ๆ
-                    tierList.forEach((key, value) {
-                      if (key != tier) {
-                        value.remove(champion);
-                      }
-                    });
-                  });
-                },
-                builder: (context, candidateData, rejectedData) => ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: tierList[tier]!
-                      .map((champion) => Draggable<String>(
-                            data: champion,
-                            feedback: Material(
-                              child: championImage(champion),
-                            ),
-                            childWhenDragging: Container(),
-                            child: championImage(champion),
-                          ))
-                      .toList(),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
