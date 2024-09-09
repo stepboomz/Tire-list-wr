@@ -1,11 +1,11 @@
 import 'dart:typed_data';
-import 'dart:ui';
+import 'dart:ui' as ui;
 import 'dart:html' as html;
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
-
 import 'rold.dart';
 
 void main() {
@@ -316,11 +316,54 @@ class _TierListPageState extends State<TierListPage> {
       ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
       final Uint8List pngBytes = byteData!.buffer.asUint8List();
 
+      // Convert the image to Image object to add watermark
+      ui.Image originalImage = await boundary.toImage(pixelRatio: 3.0);
+      final recorder = ui.PictureRecorder();
+      final canvas = Canvas(recorder);
+
+      // Draw the original image onto the canvas
+      canvas.drawImage(originalImage, Offset.zero, Paint());
+
+      // Add watermark text "stepboomz"
+      TextPainter textPainter = TextPainter(
+        text: TextSpan(
+          text: 'Developer : stepboomz',
+          style: TextStyle(
+            color: Colors.redAccent.withOpacity(0.5), // Adjust transparency
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      );
+
+      textPainter.layout();
+
+      // Draw the text on the bottom right corner
+      textPainter.paint(
+        canvas,
+        Offset(originalImage.width - textPainter.width - 20,
+            originalImage.height - textPainter.height - 20),
+      );
+
+      // Convert the canvas to an image
+      final ui.Picture picture = recorder.endRecording();
+      final ui.Image watermarkedImage = await picture.toImage(
+        originalImage.width,
+        originalImage.height,
+      );
+
+      // Convert the watermarked image to bytes
+      ByteData? watermarkedByteData =
+          await watermarkedImage.toByteData(format: ImageByteFormat.png);
+      final Uint8List watermarkedPngBytes =
+          watermarkedByteData!.buffer.asUint8List();
+
       // Save the image using html package
-      final blob = html.Blob([pngBytes]);
+      final blob = html.Blob([watermarkedPngBytes]);
       final url = html.Url.createObjectUrlFromBlob(blob);
       final anchor = html.AnchorElement(href: url)
-        ..setAttribute('download', 'tier_list.png')
+        ..setAttribute('download', 'tier_list_with_watermark.jpg')
         ..click();
       html.Url.revokeObjectUrl(url);
     } catch (e) {
@@ -347,26 +390,28 @@ class _TierListPageState extends State<TierListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tier List 5.2C'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.image),
-            onPressed:
-                _captureAndSaveTierListImage, // Save only tier list image
-            tooltip: 'Save Tier List Image',
-          ),
-          IconButton(
-            icon: Icon(Icons.save_alt),
-            onPressed: saveTierListState, // Save tier list state
-            tooltip: 'Save Tier List',
-          ),
-          IconButton(
-            icon: Icon(Icons.folder_open),
-            onPressed: loadTierListState, // Load tier list state
-            tooltip: 'Load Tier List',
-          ),
-        ],
-      ),
+          title: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'Wild Rift Tier List ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+              ),
+            ),
+            TextSpan(
+              text: 'Patch 5.2c',
+              style: TextStyle(
+                backgroundColor: Colors.redAccent[400],
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      )),
       body: SingleChildScrollView(
         child: Column(
           children: [
