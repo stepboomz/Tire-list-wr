@@ -16,6 +16,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Color(0xFF15202B),
+        appBarTheme: AppBarTheme(
+          color: Color(0xFF1B2836),
+        ),
+      ),
+      themeMode: ThemeMode.dark,
       home: TierListPage(),
     );
   }
@@ -390,28 +401,47 @@ class _TierListPageState extends State<TierListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Wild Rift Tier List ',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20.0,
+        title: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Wild Rift Tier List ',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'Patch 5.2c',
-              style: TextStyle(
-                backgroundColor: Colors.redAccent[400],
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
+              TextSpan(
+                text: 'Patch 5.2c',
+                style: TextStyle(
+                  backgroundColor: Colors.redAccent[400],
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      )),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.image),
+            onPressed:
+                _captureAndSaveTierListImage, // Save only tier list image
+            tooltip: 'Save Tier List Image',
+          ),
+          IconButton(
+            icon: Icon(Icons.save_alt),
+            onPressed: saveTierListState, // Save tier list state
+            tooltip: 'Save Tier List',
+          ),
+          IconButton(
+            icon: Icon(Icons.folder_open),
+            onPressed: loadTierListState, // Load tier list state
+            tooltip: 'Load Tier List',
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -489,7 +519,7 @@ class _TierListPageState extends State<TierListPage> {
     List<String> filteredChampionPool = filterChampionPoolByRole();
 
     return Container(
-      color: Colors.grey[200],
+      // color: Colors.black,
       padding: EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
