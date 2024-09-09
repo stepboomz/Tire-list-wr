@@ -62071,7 +62071,7 @@ $S:402}
 A.Eo.prototype={
 N(a){var s=this
 return A.a_f(A.b([s.lf("All","All_icon.webp"),s.lf("Top","Baron_icon.webp"),s.lf("Mid","Mid_icon.webp"),s.lf("Jungle","Jungle_icon.webp"),s.lf("ADC","Dragon_icon.webp"),s.lf("Support","Support_icon.webp")],t.F),B.ax,B.oK,B.cS)},
-lf(a,b){var s=null,r=this.c===a,q=A.P3(r?B.bY:B.G,2),p=A.P2(8),o=A.af2("roles/"+b,s,s,30,30),n=A.oD(s,4,s),m=r?B.aG:B.l
+lf(a,b){var s=null,r=this.c===a,q=A.P3(r?B.bY:B.G,2),p=A.P2(8),o=A.af2("assets/"+b,s,s,30,30),n=A.oD(s,4,s),m=r?B.aG:B.l
 return A.BU(s,A.dF(s,A.Aw(A.b([o,n,A.vs(a,A.h3(s,s,r?B.bY:B.i,s,s,s,s,s,s,s,s,s,s,s,m,s,s,!0,s,s,s,s,s,s,s,s))],t.F),B.ax,B.aA),B.v,s,new A.dZ(s,s,q,p,s,s,B.aO),s,s,new A.bg(8,8,8,8),s),B.an,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.a_6(this,a),s,s,s,s,s,s)}}
 A.a_6.prototype={
 $0(){this.a.d.$1(this.b)},
