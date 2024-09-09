@@ -6,6 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
 
+import 'rold.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -140,7 +142,7 @@ class _TierListPageState extends State<TierListPage> {
     'zoe',
     'zyra'
   ];
-
+  String selectedRole = 'All';
   Map<String, String> championRoles = {
     'aatrox': 'Top',
     'ahri': 'Mid',
@@ -368,6 +370,14 @@ class _TierListPageState extends State<TierListPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            RoleSelectionWidget(
+              selectedRole: selectedRole,
+              onRoleSelected: (role) {
+                setState(() {
+                  selectedRole = role;
+                });
+              },
+            ),
             buildChampionPool(),
             Padding(
               padding: const EdgeInsets.all(18.0),
@@ -387,6 +397,15 @@ class _TierListPageState extends State<TierListPage> {
         ),
       ),
     );
+  }
+
+  List<String> filterChampionPoolByRole() {
+    if (selectedRole == 'All') {
+      return championPool;
+    }
+    return championPool
+        .where((champion) => championRoles[champion] == selectedRole)
+        .toList();
   }
 
   Widget championImageWithRole(String champion, String role) {
@@ -422,6 +441,8 @@ class _TierListPageState extends State<TierListPage> {
   }
 
   Widget buildChampionPool() {
+    List<String> filteredChampionPool = filterChampionPoolByRole();
+
     return Container(
       color: Colors.grey[200],
       padding: EdgeInsets.all(8.0),
@@ -437,21 +458,20 @@ class _TierListPageState extends State<TierListPage> {
                 crossAxisSpacing: 1.0,
                 mainAxisSpacing: 1.0,
               ),
-              itemCount: championPool.length,
+              itemCount: filteredChampionPool.length,
               itemBuilder: (context, index) {
-                String champion = championPool[index];
+                String champion = filteredChampionPool[index];
                 String role = championRoles[champion] ?? 'Unknown';
 
                 return SizedBox(
-                  width: 64, // Or any fixed size
+                  width: 64,
                   height: 64,
                   child: Draggable<String>(
                     data: champion,
                     feedback: Material(
                       child: championImageWithRole(champion, role),
                     ),
-                    childWhenDragging:
-                        Container(), // Ensure proper size here too
+                    childWhenDragging: Container(),
                     child: championImageWithRole(champion, role),
                   ),
                 );
@@ -462,7 +482,6 @@ class _TierListPageState extends State<TierListPage> {
       ),
     );
   }
-
   // Widget championImage(String championName) {
   //   return GestureDetector(
   //     onTap: () {
