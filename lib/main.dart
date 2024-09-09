@@ -463,9 +463,9 @@ class _TierListPageState extends State<TierListPage> {
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: RepaintBoundary(
-                key:
-                    _tierListRepaintKey, // Use this key for the tier list section
+                key: _tierListRepaintKey,
                 child: Container(
+                  color: Color(0xFF15202B),
                   child: Column(
                     children: tierList.keys
                         .map((tier) => buildTierRow(
