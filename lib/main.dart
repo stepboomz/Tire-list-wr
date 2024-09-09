@@ -97,6 +97,8 @@ class _TierListPageState extends State<TierListPage> {
     'master-yi',
     'miss-fortune',
     'morgana',
+    'mordekaiser',
+    'maokai',
     'nami',
     'nasus',
     'nautilus',
@@ -134,6 +136,7 @@ class _TierListPageState extends State<TierListPage> {
     'twitch',
     'urgot',
     'varus',
+    'viego',
     'vayne',
     'veigar',
     'vex',
@@ -212,6 +215,8 @@ class _TierListPageState extends State<TierListPage> {
     'master-yi': 'Jungle',
     'miss-fortune': 'ADC',
     'morgana': 'Support',
+    'maokai': 'Jungle',
+    'mordekaiser': 'Top',
     'nami': 'Support',
     'nasus': 'Top',
     'nautilus': 'Support',
@@ -249,6 +254,7 @@ class _TierListPageState extends State<TierListPage> {
     'twitch': 'ADC',
     'urgot': 'Top',
     'varus': 'ADC',
+    'viego': 'Jungle',
     'vayne': 'ADC',
     'veigar': 'Mid',
     'vex': 'Mid',
@@ -489,11 +495,10 @@ class _TierListPageState extends State<TierListPage> {
         Container(
           width: 64,
           height: 64,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 1.0),
-          ),
-          child: championImage(
-              champion), // The function that displays the champion image
+          // decoration: BoxDecoration(
+          //   border: Border.all(color: Colors.black, width: 1.0),
+          // ),
+          child: championImage(champion),
         ),
         Positioned(
           top: 0,
@@ -505,7 +510,7 @@ class _TierListPageState extends State<TierListPage> {
               champion,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 12.0,
+                fontSize: 10.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -584,13 +589,14 @@ class _TierListPageState extends State<TierListPage> {
           shape: BoxShape.circle, // ทำให้ Container เป็นวงกลม
           border: Border.all(
             color: Colors.transparent, // เพิ่มเส้นขอบ (ถ้าต้องการ)
-            width: 2.0,
+            width: 3.0,
           ),
         ),
         clipBehavior: Clip.hardEdge, // ตัดรูปภาพส่วนเกินออกให้เป็นวงกลม
         child: Image.asset(
           'champs/${championName.toLowerCase()}.webp',
           fit: BoxFit.cover, // ทำให้ภาพเต็มพื้นที่ของ Container
+
           errorBuilder: (context, error, stackTrace) {
             return Icon(Icons.error);
           },
@@ -675,11 +681,7 @@ class _TierListPageState extends State<TierListPage> {
                       .map((champion) => Draggable<String>(
                             data: champion,
                             feedback: Material(
-                              child: Container(
-                                padding: EdgeInsets.all(8.0),
-                                color: Colors.red, // สีขณะลาก
-                                child: championImage(champion),
-                              ),
+                              child: championImage(champion),
                             ),
                             childWhenDragging: Container(),
                             child: championImage(champion),
